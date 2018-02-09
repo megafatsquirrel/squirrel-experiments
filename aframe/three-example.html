@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello, World! - ThreeJS</title>
+    <meta name="description" content="Hello, World! - ThreeJS">
+  </head>
+  <body>
+    <canvas id="Canvas"></canvas>
+    <script src="js/three.js"></script>
+    <script>
+        var canvas = document.getElementById('Canvas');
+        var renderer = new THREE.WebGLRenderer({
+                                canvas: canvas,
+                                antialias: true });
+        renderer.setClearColor('skyblue');
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        var camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 3000);
+        var scene = new THREE.Scene();
+        var pyramidGeometry = new THREE.CylinderGeometry(0, 0.8, 2, 4);
+        var pyramidMaterial = new THREE.MeshLambertMaterial({color: 0xF3FFE2});
+        var pyramidMesh = new THREE.Mesh(pyramidGeometry, pyramidMaterial);
+
+        pyramidMesh.position.set(0, 2, -10);
+
+        scene.add(pyramidMesh);
+
+        var lightOne = new THREE.AmbientLight(0xffff, 0.5);
+        var lightTwo = new THREE.PointLight(0xffff, 0.5);
+        scene.add(lightOne);
+        scene.add(lightTwo);
+            
+        requestAnimationFrame(render);
+
+        function render() {
+            pyramidMesh.rotation.y += 0.01;
+            renderer.render(scene, camera);
+            requestAnimationFrame(render);
+        }
+
+    </script>
+  </body>
+</html>
